@@ -29,21 +29,22 @@ class _ExpensesPageState extends State<ExpensesPage> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    return Container(
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [colorScheme.bg1, colorScheme.bg2])),
-      child: Scaffold(
-          extendBody: true,
-          backgroundColor: Colors.transparent,
-          body: SafeArea(
+    return Scaffold(
+      extendBody: true,
+      body: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [colorScheme.bg1, colorScheme.bg2])),
+          child: SafeArea(
               child: IndexedStack(
             index: indexTap,
             children: widgetsChildren.keys.toList(),
-          )),
-          bottomNavigationBar: BottomNavigationBar(
+          ))),
+      bottomNavigationBar: Theme(
+          data: Theme.of(context).copyWith(canvasColor: Colors.transparent),
+          child: BottomNavigationBar(
             type: BottomNavigationBarType.shifting,
             elevation: 0,
             selectedItemColor: Colors.white,
