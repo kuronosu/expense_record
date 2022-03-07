@@ -1,4 +1,7 @@
+import 'package:expense_record/Expenses/bloc/bloc_expenses.dart';
 import 'package:expense_record/Expenses/exprense.dart';
+import 'package:expense_record/Expenses/ui/screens/add_expense.dart';
+import 'package:expense_record/utils/bloc_utils.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,6 +18,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: const ExpensesPage(),
+      routes: {
+        '/add_expense': (_) => const AddExpense(),
+      },
     );
   }
 }

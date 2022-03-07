@@ -1,7 +1,10 @@
+import 'package:expense_record/Expenses/bloc/bloc_expenses.dart';
 import 'package:expense_record/Expenses/ui/screens/expenses_review.dart';
 import 'package:expense_record/Expenses/ui/screens/user_profile.dart';
 import 'package:expense_record/app_color_scheme.dart';
+import 'package:expense_record/utils/bloc_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 
 class ExpensesPage extends StatefulWidget {
   const ExpensesPage({Key? key}) : super(key: key);
@@ -16,8 +19,10 @@ BottomNavigationBarItem bnBarItem(String label, IconData icon) =>
 class _ExpensesPageState extends State<ExpensesPage> {
   int indexTap = 0;
   final widgetsChildren = {
-    const ExpensesReview(): bnBarItem('Home', Icons.home_outlined),
-    const UserProfile(): bnBarItem('Profile', Icons.person_outline),
+    withExpenseBloc(const ExpensesReview()):
+        bnBarItem('Home', Icons.home_rounded),
+    const UserProfile():
+        bnBarItem('Profile', Icons.person_rounded),
   };
 
   void onTapTapped(int index) {
