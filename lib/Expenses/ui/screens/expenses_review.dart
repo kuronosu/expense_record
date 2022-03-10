@@ -11,14 +11,11 @@ class ExpensesReview extends StatefulWidget {
   State<ExpensesReview> createState() => EexpensesReviewState();
 }
 
-const url = 'https://c.tenor.com/IMNDZBkct8gAAAAC/anime-girl.gif';
-
 class EexpensesReviewState extends State<ExpensesReview> {
   late ExpensesBloc _bloc;
 
   void _addExpense() {
-    _bloc.addExpense(
-        Expense(description: 'Pc', date: DateTime.now(), img: url, price: 10));
+    Navigator.pushNamed(context, '/add_expense');
   }
 
   @override

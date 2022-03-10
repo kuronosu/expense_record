@@ -5,6 +5,7 @@ class MemoryRepository {
 
   List<Expense> addExpense(Expense expense) {
     expenses.add(expense);
+    expenses.sort((a, b) => b.date.compareTo(a.date));
     return expenses;
   }
 
