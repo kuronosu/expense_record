@@ -1,7 +1,9 @@
+import 'package:expense_record/Expenses/bloc/bloc_expenses.dart';
 import 'package:expense_record/Expenses/model/expense.dart';
 import 'package:expense_record/widgets/circular_image.dart';
 import 'package:flutter/material.dart';
 import 'package:expense_record/app_color_scheme.dart';
+import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:intl/intl.dart';
 
 class ExpenseItem extends StatefulWidget {
@@ -13,12 +15,14 @@ class ExpenseItem extends StatefulWidget {
 }
 
 class _ExpenseItemState extends State<ExpenseItem> {
+  late ExpensesBloc _bloc;
   void onEditExpense() {
-    setState(() {});
+    _bloc.removeExpense(widget.expense);
   }
 
   @override
   Widget build(BuildContext context) {
+    _bloc = BlocProvider.of(context);
     const txtStyle = TextStyle(color: Colors.white70);
     final thumbnail = Container(
         margin: const EdgeInsets.symmetric(vertical: 16.0),
@@ -64,7 +68,8 @@ class _ExpenseItemState extends State<ExpenseItem> {
                         child: IconButton(
                           padding: EdgeInsets.zero,
                           constraints: const BoxConstraints(),
-                          icon: const Icon(Icons.edit),
+                          // icon: const Icon(Icons.edit),
+                          icon: const Icon(Icons.delete),
                           tooltip: 'Edit',
                           color: Colors.white,
                           onPressed: onEditExpense,

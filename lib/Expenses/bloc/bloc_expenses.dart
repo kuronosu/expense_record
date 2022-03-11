@@ -5,20 +5,21 @@ import 'package:expense_record/Expenses/repository/expenses_repository.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 
 class ExpensesBloc implements Bloc {
-  ExpensesRepository repository = ExpensesRepository();
+  late final ExpensesRepository repository;
+  final _esController = StreamController<List<Expense>>();
+  StreamSink<List<Expense>> get expensesSink => _esController.sink;
+  Stream<List<Expense>> get streamExpenses => _esController.stream;
 
-  final _expensesStreamController = StreamController<List<Expense>>();
-  StreamSink<List<Expense>> get expensesSink => _expensesStreamController.sink;
-  Stream<List<Expense>> get streamExpenses => _expensesStreamController.stream;
+  ExpensesBloc() {
+    repository = ExpensesRepository((e) => _esController.sink.add(e));
+  }
 
-  addExpense(Expense payload) =>
-      expensesSink.add(repository.addExpense(payload));
+  addExpense(Expense payload) => repository.addExpense(payload);
 
-  removeExpense(Expense payload) =>
-      expensesSink.add(repository.removeExpense(payload));
+  removeExpense(Expense payload) => repository.removeExpense(payload);
 
   @override
   void dispose() {
-    _expensesStreamController.close();
+    _esController.close();
   }
 }

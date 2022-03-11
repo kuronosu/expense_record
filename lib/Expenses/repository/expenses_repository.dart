@@ -1,9 +1,18 @@
 import 'package:expense_record/Expenses/model/expense.dart';
-import 'package:expense_record/Expenses/repository/memory_repository.dart';
+import 'package:expense_record/Expenses/repository/sqlite_repository.dart';
 
 class ExpensesRepository {
-  final MemoryRepository _memory = MemoryRepository();
-  List<Expense> addExpense(Expense payload) => _memory.addExpense(payload);
+  final void Function(List<Expense> data) onExpensesStreamListen;
+  late final SqliteRepository _sqlite;
 
-  List<Expense> removeExpense(Expense payload) => _memory.removeExpense(payload);
+  ExpensesRepository(this.onExpensesStreamListen) {
+    _sqlite = SqliteRepository(onExpensesStreamListen);
+  }
+
+  addExpense(Expense payload) => _sqlite.addExpense(payload);
+  removeExpense(Expense payload) => _sqlite.removeExpense(payload);
+
+  Future<List<Expense>> allExpenses() {
+    return _sqlite.getAllExpense();
+  }
 }
