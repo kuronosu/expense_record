@@ -8,10 +8,8 @@ class SqliteRepository {
   void Function(List<Expense> data) onExpensesStreamListen;
 
   SqliteRepository(this.onExpensesStreamListen) {
-    getDatabase('expense.db').then((value) {
-      db = value;
-      db.expenseDao.findAllExpensesAsStream().listen(onExpensesStreamListen);
-    });
+    db = AppDatabase.getInstance();
+    db.expenseDao.findAllExpensesAsStream().listen(onExpensesStreamListen);
   }
 
   addExpense(Expense expense) {

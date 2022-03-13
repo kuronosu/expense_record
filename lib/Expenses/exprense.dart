@@ -31,10 +31,11 @@ class _ExpensesPageState extends State<ExpensesPage> {
     return Scaffold(
       extendBody: true,
       body: Background(
-          child: IndexedStack(
+          child: SafeArea(
+              child: IndexedStack(
         index: indexTap,
         children: widgetsChildren.keys.toList(),
-      )),
+      ))),
       bottomNavigationBar: Theme(
           data: Theme.of(context).copyWith(canvasColor: Colors.transparent),
           child: BottomNavigationBar(

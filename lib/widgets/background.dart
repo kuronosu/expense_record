@@ -14,6 +14,6 @@ class Background extends StatelessWidget {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [colorScheme.bg1, colorScheme.bg2])),
-        child: SafeArea(child: child));
+        child: child);
   }
 }

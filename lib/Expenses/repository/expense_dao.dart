@@ -9,7 +9,6 @@ abstract class ExpenseDao {
   @Query('SELECT * FROM Expense')
   Stream<List<Expense>> findAllExpensesAsStream();
 
-
   @Query('SELECT * FROM Expense WHERE id = :id')
   Stream<Expense?> findExpenseById(int id);
 

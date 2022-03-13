@@ -34,13 +34,14 @@ class _AddExpenseState extends State<AddExpense> {
   Widget build(BuildContext context) {
     _bloc = BlocProvider.of(context);
     return Background(
-        child: Center(
+        child: SafeArea(
+            child: Center(
       child: FloatingActionButton.extended(
           onPressed: _addExpense,
           label: const Text(
             'Add',
             style: TextStyle(color: Colors.white),
           )),
-    ));
+    )));
   }
 }
