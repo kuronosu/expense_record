@@ -1,5 +1,6 @@
 import 'package:expense_record/Expenses/bloc/bloc_expenses.dart';
 import 'package:expense_record/Expenses/model/expense.dart';
+import 'package:expense_record/utils/datetime_utils.dart';
 import 'package:expense_record/widgets/circular_image.dart';
 import 'package:flutter/material.dart';
 import 'package:expense_record/app_color_scheme.dart';
@@ -83,7 +84,7 @@ class _ExpenseItemState extends State<ExpenseItem> {
               ),
               const Spacer(),
               Text(
-                DateFormat.yMMMMd().format(widget.expense.date),
+                formatDateTime(widget.expense.date),
                 style: txtStyle,
               ),
             ],
@@ -101,5 +102,13 @@ class _ExpenseItemState extends State<ExpenseItem> {
             thumbnail,
           ],
         ));
+  }
+
+  String formatDateTime(DateTime dt) {
+    String res = DateFormat.yMMMMd().format(widget.expense.date);
+    // if (!dt.isOnlyDate()) {
+      res += " - ${DateFormat.Hm().format(widget.expense.date)}";
+    // }
+    return res;
   }
 }
