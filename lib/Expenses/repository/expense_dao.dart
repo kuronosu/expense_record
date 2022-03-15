@@ -3,10 +3,10 @@ import 'package:floor/floor.dart';
 
 @dao
 abstract class ExpenseDao {
-  @Query('SELECT * FROM Expense')
+  @Query('SELECT * FROM Expense ORDER BY date')
   Future<List<Expense>> findAllExpenses();
 
-  @Query('SELECT * FROM Expense')
+  @Query('SELECT * FROM Expense ORDER BY date')
   Stream<List<Expense>> findAllExpensesAsStream();
 
   @Query('SELECT * FROM Expense WHERE id = :id')
