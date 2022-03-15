@@ -135,7 +135,7 @@ class _$ExpenseDao extends ExpenseDao {
 
   @override
   Future<List<Expense>> findAllExpenses() async {
-    return _queryAdapter.queryList('SELECT * FROM Expense ORDER BY date',
+    return _queryAdapter.queryList('SELECT * FROM Expense ORDER BY date DESC',
         mapper: (Map<String, Object?> row) => Expense(
             id: row['id'] as int?,
             description: row['description'] as String,
@@ -146,7 +146,8 @@ class _$ExpenseDao extends ExpenseDao {
 
   @override
   Stream<List<Expense>> findAllExpensesAsStream() {
-    return _queryAdapter.queryListStream('SELECT * FROM Expense ORDER BY date',
+    return _queryAdapter.queryListStream(
+        'SELECT * FROM Expense ORDER BY date DESC',
         mapper: (Map<String, Object?> row) => Expense(
             id: row['id'] as int?,
             description: row['description'] as String,
