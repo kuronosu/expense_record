@@ -3,7 +3,9 @@ import 'package:expense_record/widgets/background.dart';
 import 'package:flutter/material.dart';
 
 class LoadingScreen extends StatelessWidget {
-  const LoadingScreen({Key? key}) : super(key: key);
+  const LoadingScreen({Key? key, this.withProgressIndicator = false})
+      : super(key: key);
+  final bool withProgressIndicator;
 
   @override
   Widget build(BuildContext context) {
@@ -16,10 +18,12 @@ class LoadingScreen extends StatelessWidget {
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // CircularProgressIndicator(
-            //   color: theme.colorScheme.loader,
-            //   strokeWidth: 3,
-            // ),
+            withProgressIndicator
+                ? CircularProgressIndicator(
+                    color: theme.colorScheme.loader,
+                    strokeWidth: 3,
+                  )
+                : const SizedBox.shrink(),
             Text(
               'Expenses record',
               style: theme.textTheme.displaySmall
