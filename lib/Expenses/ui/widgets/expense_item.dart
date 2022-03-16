@@ -105,10 +105,11 @@ class _ExpenseItemState extends State<ExpenseItem> {
   }
 
   String formatDateTime(DateTime dt) {
-    String res = DateFormat.yMMMMd().format(widget.expense.date);
-    // if (!dt.isOnlyDate()) {
-      res += " - ${DateFormat.Hm().format(widget.expense.date)}";
-    // }
-    return res;
+    var formatter = DateFormat.yMMMMd();
+    if (!dt.isOnlyDate()) {
+      formatter.addPattern(" - ");
+      formatter.add_Hm();
+    }
+    return formatter.format(widget.expense.date);
   }
 }
