@@ -23,8 +23,8 @@ class _AddExpenseFormState extends State<AddExpenseForm> {
   var withTime = true;
 
   void _addExpense() {
-    _bloc.addExpense(
-        Expense(description: description.capitalize(), date: date, price: value));
+    _bloc.addExpense(Expense(
+        description: description.capitalize(), date: date, price: value));
     Navigator.pop(context);
   }
 
@@ -104,7 +104,10 @@ class _AddExpenseFormState extends State<AddExpenseForm> {
         onSaved: (String? value) =>
             this.value = value != null ? double.parse(value) : 0,
         validator: (value) {
-          if (value == null || value.isEmpty || value.trim().isEmpty) {
+          if (value == null ||
+              value.isEmpty ||
+              value.trim().isEmpty ||
+              (double.tryParse(value.trim()) ?? 0) <= 0) {
             return 'Please enter a valid value';
           }
           return null;
