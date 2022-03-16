@@ -1,10 +1,10 @@
+import 'package:flutter/material.dart';
+import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:expense_record/Expenses/bloc/bloc_expenses.dart';
 import 'package:expense_record/Expenses/exprense.dart';
 import 'package:expense_record/Expenses/ui/screens/add_expense.dart';
 import 'package:expense_record/database.dart';
 import 'package:expense_record/widgets/loading_screen.dart';
-import 'package:flutter/material.dart';
-import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 
 void main() {
   runApp(const MyApp());

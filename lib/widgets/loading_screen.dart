@@ -11,7 +11,7 @@ class LoadingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Container(
-        height: (MediaQuery.of(context).size.height),
+        height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         color: Colors.red,
         child: Background(

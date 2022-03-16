@@ -1,47 +1,29 @@
-import 'dart:math';
-
-import 'package:expense_record/Expenses/bloc/bloc_expenses.dart';
-import 'package:expense_record/Expenses/model/expense.dart';
-import 'package:expense_record/widgets/background.dart';
 import 'package:flutter/material.dart';
-import 'package:generic_bloc_provider/generic_bloc_provider.dart';
+import 'package:expense_record/widgets/background.dart';
+import 'package:expense_record/Expenses/ui/widgets/add_expense_from.dart';
 
-const url = 'https://c.tenor.com/IMNDZBkct8gAAAAC/anime-girl.gif';
-
-class AddExpense extends StatefulWidget {
+class AddExpense extends StatelessWidget {
   const AddExpense({Key? key}) : super(key: key);
 
   @override
-  State<AddExpense> createState() => _AddExpenseState();
-}
-
-final _random = Random();
-int next(int min, int max) => min + _random.nextInt(max - min);
-
-class _AddExpenseState extends State<AddExpense> {
-  late ExpensesBloc _bloc;
-
-  void _addExpense() {
-    _bloc.addExpense(Expense(
-        description: 'Pc',
-        date: DateTime.now(),
-        img: url,
-        price: next(10, 100).toDouble()));
-    Navigator.pop(context);
-  }
-
-  @override
   Widget build(BuildContext context) {
-    _bloc = BlocProvider.of(context);
-    return Background(
+    return Material(
+      child: Background(
         child: SafeArea(
-            child: Center(
-      child: FloatingActionButton.extended(
-          onPressed: _addExpense,
-          label: const Text(
-            'Add',
-            style: TextStyle(color: Colors.white),
-          )),
-    )));
+            child: Column(
+          children: [
+            AppBar(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              title: const Text('New expense'),
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: AddExpenseForm(),
+            ),
+          ],
+        )),
+      ),
+    );
   }
 }
