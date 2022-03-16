@@ -5,6 +5,7 @@ import 'package:expense_record/Expenses/bloc/bloc_expenses.dart';
 import 'package:expense_record/Expenses/model/expense.dart';
 import 'package:expense_record/Expenses/ui/widgets/datetime_picker.dart';
 import 'package:expense_record/Expenses/ui/widgets/utils.dart';
+import 'package:expense_record/utils/strings_utils.dart';
 
 const url = 'https://c.tenor.com/IMNDZBkct8gAAAAC/anime-girl.gif';
 
@@ -23,7 +24,7 @@ class _AddExpenseFormState extends State<AddExpenseForm> {
 
   void _addExpense() {
     _bloc.addExpense(
-        Expense(description: description, date: date, img: url, price: value));
+        Expense(description: description.capitalize(), date: date, price: value));
     Navigator.pop(context);
   }
 
