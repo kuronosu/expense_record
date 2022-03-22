@@ -15,6 +15,9 @@ abstract class ExpenseDao {
   @insert
   Future<void> insertExpense(Expense expense);
 
+  @update
+  Future<void> updateExpense(Expense expense);
+
   @delete
   Future<void> deleteExpense(Expense expense);
 }

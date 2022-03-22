@@ -10,6 +10,7 @@ class ExpensesRepository {
   }
 
   addExpense(Expense payload) => _sqlite.addExpense(payload);
+  updateExpense(Expense payload) => _sqlite.updateExpense(payload);
   removeExpense(Expense payload) => _sqlite.removeExpense(payload);
 
   Future<List<Expense>> allExpenses() {

@@ -16,6 +16,8 @@ class ExpensesBloc implements Bloc {
 
   addExpense(Expense payload) => repository.addExpense(payload);
 
+  updateExpense(Expense payload) => repository.updateExpense(payload);
+
   removeExpense(Expense payload) => repository.removeExpense(payload);
 
   @override

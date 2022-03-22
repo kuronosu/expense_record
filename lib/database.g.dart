@@ -110,6 +110,18 @@ class _$ExpenseDao extends ExpenseDao {
                   'img': item.img
                 },
             changeListener),
+        _expenseUpdateAdapter = UpdateAdapter(
+            database,
+            'Expense',
+            ['id'],
+            (Expense item) => <String, Object?>{
+                  'id': item.id,
+                  'description': item.description,
+                  'date': _dateTimeConverter.encode(item.date),
+                  'price': item.price,
+                  'img': item.img
+                },
+            changeListener),
         _expenseDeletionAdapter = DeletionAdapter(
             database,
             'Expense',
@@ -130,6 +142,8 @@ class _$ExpenseDao extends ExpenseDao {
   final QueryAdapter _queryAdapter;
 
   final InsertionAdapter<Expense> _expenseInsertionAdapter;
+
+  final UpdateAdapter<Expense> _expenseUpdateAdapter;
 
   final DeletionAdapter<Expense> _expenseDeletionAdapter;
 
@@ -175,6 +189,11 @@ class _$ExpenseDao extends ExpenseDao {
   @override
   Future<void> insertExpense(Expense expense) async {
     await _expenseInsertionAdapter.insert(expense, OnConflictStrategy.abort);
+  }
+
+  @override
+  Future<void> updateExpense(Expense expense) async {
+    await _expenseUpdateAdapter.update(expense, OnConflictStrategy.abort);
   }
 
   @override

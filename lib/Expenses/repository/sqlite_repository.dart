@@ -16,6 +16,10 @@ class SqliteRepository {
     db.expenseDao.insertExpense(expense);
   }
 
+  updateExpense(Expense payload) {
+    db.expenseDao.updateExpense(payload);
+  }
+
   removeExpense(Expense payload) {
     db.expenseDao.deleteExpense(payload);
   }
