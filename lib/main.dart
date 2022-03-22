@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
+import 'package:expense_record/Expenses/ui/screens/edit_expense.dart';
 import 'package:expense_record/Expenses/bloc/bloc_expenses.dart';
 import 'package:expense_record/Expenses/exprense.dart';
 import 'package:expense_record/Expenses/ui/screens/add_expense.dart';
@@ -39,7 +40,8 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         home: const ExpensesPage(),
         routes: {
-          '/add_expense': (_) => const AddExpense(),
+          AddExpense.routeName: (_) => AddExpense(),
+          EditExpense.routeName: (_) => EditExpense(),
         },
       ));
 

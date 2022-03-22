@@ -1,36 +1,29 @@
-import 'package:expense_record/Expenses/bloc/bloc_expenses.dart';
+import 'package:intl/intl.dart';
+import 'package:flutter/material.dart';
 import 'package:expense_record/Expenses/model/expense.dart';
+import 'package:expense_record/Expenses/ui/screens/edit_expense.dart';
 import 'package:expense_record/utils/datetime_utils.dart';
 import 'package:expense_record/widgets/circular_image.dart';
-import 'package:flutter/material.dart';
 import 'package:expense_record/app_color_scheme.dart';
-import 'package:generic_bloc_provider/generic_bloc_provider.dart';
-import 'package:intl/intl.dart';
 
-class ExpenseItem extends StatefulWidget {
+class ExpenseItem extends StatelessWidget {
   const ExpenseItem({Key? key, required this.expense}) : super(key: key);
   final Expense expense;
-
-  @override
-  State<ExpenseItem> createState() => _ExpenseItemState();
-}
-
-class _ExpenseItemState extends State<ExpenseItem> {
-  late ExpensesBloc _bloc;
-  void onEditExpense() {
-    _bloc.removeExpense(widget.expense);
+  void onEditExpense(BuildContext context) {
+    Navigator.pushNamed(
+      context,
+      EditExpense.routeName,
+      arguments: expense,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    _bloc = BlocProvider.of(context);
     const txtStyle = TextStyle(color: Colors.white70);
     final thumbnail = Container(
         margin: const EdgeInsets.symmetric(vertical: 16.0),
         child: CircularImage(
-            size: 72,
-            text: widget.expense.description,
-            img: widget.expense.img));
+            size: 72, text: expense.description, img: expense.img));
 
     final card = Container(
         height: 104.0,
@@ -57,7 +50,7 @@ class _ExpenseItemState extends State<ExpenseItem> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    widget.expense.description,
+                    expense.description,
                     style: Theme.of(context)
                         .textTheme
                         .headline5
@@ -69,22 +62,22 @@ class _ExpenseItemState extends State<ExpenseItem> {
                         child: IconButton(
                           padding: EdgeInsets.zero,
                           constraints: const BoxConstraints(),
-                          // icon: const Icon(Icons.edit),
-                          icon: const Icon(Icons.delete),
+                          icon: const Icon(Icons.edit),
+                          // icon: const Icon(Icons.delete),
                           tooltip: 'Edit',
                           color: Colors.white,
-                          onPressed: onEditExpense,
+                          onPressed: () => onEditExpense(context),
                         )),
                   ),
                 ],
               ),
               Text(
-                "\$${widget.expense.price}",
+                "\$${expense.price}",
                 style: txtStyle,
               ),
               const Spacer(),
               Text(
-                formatDateTime(widget.expense.date),
+                formatDateTime(expense.date),
                 style: txtStyle,
               ),
             ],
@@ -110,6 +103,6 @@ class _ExpenseItemState extends State<ExpenseItem> {
       formatter.addPattern(" - ");
       formatter.add_Hm();
     }
-    return formatter.format(widget.expense.date);
+    return formatter.format(expense.date);
   }
 }

@@ -1,5 +1,6 @@
 import 'package:expense_record/Expenses/bloc/bloc_expenses.dart';
 import 'package:expense_record/Expenses/model/expense.dart';
+import 'package:expense_record/Expenses/ui/screens/add_expense.dart';
 import 'package:expense_record/Expenses/ui/widgets/expenses_list.dart';
 import 'package:flutter/material.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
@@ -15,7 +16,7 @@ class EexpensesReviewState extends State<ExpensesReview> {
   late ExpensesBloc _bloc;
 
   void _addExpense() {
-    Navigator.pushNamed(context, '/add_expense');
+    Navigator.pushNamed(context, AddExpense.routeName);
   }
 
   @override

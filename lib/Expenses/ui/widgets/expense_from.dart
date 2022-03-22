@@ -1,40 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:generic_bloc_provider/generic_bloc_provider.dart';
-import 'package:expense_record/Expenses/bloc/bloc_expenses.dart';
 import 'package:expense_record/Expenses/model/expense.dart';
+import 'package:expense_record/utils/datetime_utils.dart';
 import 'package:expense_record/Expenses/ui/widgets/datetime_picker.dart';
 import 'package:expense_record/Expenses/ui/widgets/utils.dart';
-import 'package:expense_record/utils/strings_utils.dart';
 
 const url = 'https://c.tenor.com/IMNDZBkct8gAAAAC/anime-girl.gif';
 
-class AddExpenseForm extends StatefulWidget {
-  const AddExpenseForm({Key? key}) : super(key: key);
+typedef OnSubmitExpenseForm = void Function(
+    String description, DateTime date, double value);
+
+class ExpenseForm extends StatefulWidget {
+  const ExpenseForm({
+    Key? key,
+    this.initialData,
+    required this.buttonText,
+    required this.onSubmit,
+  }) : super(key: key);
+
+  final String buttonText;
+  final OnSubmitExpenseForm onSubmit;
+  final Expense? initialData;
 
   @override
-  State<AddExpenseForm> createState() => _AddExpenseFormState();
+  State<ExpenseForm> createState() => _ExpenseFormState();
 }
 
-class _AddExpenseFormState extends State<AddExpenseForm> {
-  late ExpensesBloc _bloc;
-
+class _ExpenseFormState extends State<ExpenseForm> {
   final _formKey = GlobalKey<FormState>();
   var withTime = true;
 
-  void _addExpense() {
-    _bloc.addExpense(Expense(
-        description: description.capitalize(), date: date, price: value));
-    Navigator.pop(context);
-  }
+  late String description;
+  late DateTime date;
+  late double value;
 
-  String description = "";
-  DateTime date = DateTime.now();
-  double value = 0;
+  late TextEditingController _descriptionFieldController;
+  late TextEditingController _valueFieldController;
+
+  @override
+  void initState() {
+    super.initState();
+    date = widget.initialData?.date ?? DateTime.now();
+    description = widget.initialData?.description ?? '';
+    value = widget.initialData?.price ?? 0;
+    _descriptionFieldController = TextEditingController(text: description);
+    _valueFieldController = TextEditingController(text: value.toString());
+  }
 
   @override
   Widget build(BuildContext context) {
-    _bloc = BlocProvider.of(context);
     return Form(
       key: _formKey,
       child: Column(
@@ -42,21 +56,22 @@ class _AddExpenseFormState extends State<AddExpenseForm> {
           descriptionField,
           valueField,
           DatetimePicker(
-            initialDate: DateTime.now(),
+            label: 'Date',
+            initialDate: date,
             firstDate: DateTime(1990),
             lastDate: DateTime(3000),
             onChanged: (dt) => date = dt,
-            label: 'Date',
+            initialWithTime: !date.isOnlyDate(),
           ),
           Container(
               padding: const EdgeInsets.only(top: 40.0),
               child: ElevatedButton(
-                child: const Text('Add'),
+                child: Text(widget.buttonText),
                 onPressed: () {
                   if (_formKey.currentState != null &&
                       _formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
-                    _addExpense();
+                    widget.onSubmit(description, date, value);
                   }
                 },
               )),
@@ -66,6 +81,7 @@ class _AddExpenseFormState extends State<AddExpenseForm> {
   }
 
   TextFormField get descriptionField => TextFormField(
+        controller: _descriptionFieldController,
         style: const TextStyle(color: Colors.white),
         onSaved: (String? value) => description = value ?? "",
         validator: (value) {
@@ -86,6 +102,7 @@ class _AddExpenseFormState extends State<AddExpenseForm> {
       );
 
   TextFormField get valueField => TextFormField(
+        controller: _valueFieldController,
         style: const TextStyle(color: Colors.white),
         keyboardType:
             const TextInputType.numberWithOptions(decimal: true, signed: false),

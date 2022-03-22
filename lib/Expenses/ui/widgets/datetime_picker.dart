@@ -10,10 +10,12 @@ class DatetimePicker extends StatefulWidget {
     required this.lastDate,
     required this.initialDate,
     required this.onChanged,
+    this.initialWithTime = true,
   }) : super(key: key);
   final String label;
   final DateTime firstDate, lastDate, initialDate;
   final ValueChanged<DateTime> onChanged;
+  final bool initialWithTime;
 
   @override
   State<DatetimePicker> createState() => _DatetimePickerState();
@@ -22,7 +24,7 @@ class DatetimePicker extends StatefulWidget {
 class _DatetimePickerState extends State<DatetimePicker> {
   late TextEditingController _dateController;
   DateTime? __date;
-  var _withTime = true;
+  bool _withTime = true;
 
   DateTime get _date => __date ?? widget.initialDate;
   set _date(DateTime val) => __date = val;
@@ -30,6 +32,7 @@ class _DatetimePickerState extends State<DatetimePicker> {
   @override
   void initState() {
     super.initState();
+    _withTime = widget.initialWithTime;
     _dateController = TextEditingController(text: formatter.format(_date));
   }
 
